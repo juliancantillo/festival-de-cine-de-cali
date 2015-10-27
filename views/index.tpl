@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>React Starterify</title>
+    <title>Festival Internacional de Cine de Cali 2015</title>
 
     <!-- build:css -->
     <link rel="stylesheet" href="dist/styles/main.css">

@@ -1,9 +1,17 @@
-application: hello-bottle-app-engine
+application: festival-internacional-de-cine
 version: 1
 runtime: python27
 api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /dist
+  static_dir: dist
+  http_headers:
+    Access-Control-Allow-Origin: http://festival-internacional-de-cine.appspot.com
+
 - url: .*
   script: main.app
+
+skip_files:
+- ^node_modules$
