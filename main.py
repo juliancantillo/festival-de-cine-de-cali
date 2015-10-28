@@ -3,6 +3,8 @@ from bottle import Bottle, template, request
 from bottle import static_file
 
 from google.appengine.ext import ndb
+from google.appengine.ext import db
+from google.appengine.api import images
 from app.models import Movie
 
 app = Bottle()
@@ -44,6 +46,33 @@ def get_movie_item(id):
         'data': data
     }
 
+@app.route('/new', method=['POST','GET'])
+def new_movie():
+
+    title = request.forms.get('title')
+    year = request.forms.get('year')
+    runtime = request.forms.get('runtime')
+    category = request.forms.get('category')
+    comment = request.forms.get('comment')
+    poster = request.files.get('poster')
+
+    if title is not None and year is not None and runtime is not None and category is not None and poster is not None:
+        try:
+            movie = Movie()
+            movie.title = title
+            movie.year = int(year)
+            movie.runtime = int(runtime)
+            movie.category = category
+            movie.comment = comment
+            movie.poster = db.Blob(poster)
+
+            movie_key = movie.put()
+
+        except Exception, e:
+            return e
+        
+    
+    return template('create_movie')
 
 @app.route('/api/movies', method='POST')
 def post_movie():
